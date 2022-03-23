@@ -14,8 +14,79 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 get_header();
+
+$page_title = get_field('title') ?? '';
+$page_description = get_field('description') ?? '';
+
+$args_query = array(
+    'post_type' => 'jobs',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'meta_key' => 'job_closing_date',
+    'meta_type' => 'date',
+    'orderby' => 'meta_value',
+    'order' => "ASC",
+);
+
+$vacancies = new WP_Query($args_query);
+
 ?>
-<main id="vacancies-template"></main>
+<main id="vacancies-template-d96e02">
+    <div class="container">
+        <?php if (!empty($page_title)) : ?>
+            <h1 class="title-page text-center">
+                <?= $page_title; ?>
+            </h1>
+        <?php endif; ?>
+
+        <?php if (!empty($page_description)) : ?>
+            <p class="page-description">
+                <?= $page_description; ?>
+            </p>
+        <?php endif; ?>
+
+        <?php if (!empty($vacancies)) : ?>
+            <div class="vacancies-listing mt-5">
+                <div class="row gy-4">
+                    <?php while ($vacancies->have_posts()) :
+                        $vacancies->the_post();
+                        $job_description = get_field('job_description') ?? '';
+                        $job_closing_date = get_field('job_closing_date') ?? '';
+                    ?>
+                        <div class="col-md-4 item-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        Vacante:
+                                    </h5>
+                                    <p class="card-text text-uppercase">
+                                        <?= the_title(); ?>
+                                    </p>
+
+                                    <h5 class="card-title">
+                                        Descripción:
+                                    </h5>
+                                    <div class="card-text">
+                                        <?= $job_description; ?>
+                                    </div>
+
+                                    <h5 class="card-title">
+                                        Fecha de cierre de convocatoria:
+                                    </h5>
+                                    <p class="card-text">
+                                        <?= $job_closing_date; ?>
+                                    </p>
+
+                                    <a href="<?= the_permalink(); ?>" class="btn btn-primary text-decoration-none mt-5">Aplicar</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</main>
 <?php get_footer(); ?>
 ```
 
@@ -118,6 +189,8 @@ $job_description = get_field('job_description') ?? '';
 
 <?php get_footer(); ?>
 ```
+
+------------
 
 4.  Usando el plugin de Contact Form 7, crear un formulario llamado **Formulario de solicitudes** y editar la plantilla del formulario con el siguiente bloque de código:
 
@@ -412,5 +485,7 @@ $job_description = get_field('job_description') ?? '';
    [submit class:btn class:btn-primary "Enviar hoja de vida"]
 </div>
 ```
+
+------------
 
 5. En la pestaña **Ajustes adicionales** del plugin del formulario, agregar `skip_mail: on` y guardar los cambios.
