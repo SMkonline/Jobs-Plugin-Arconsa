@@ -103,88 +103,89 @@ $vacancies = new WP_Query($args_query);
  */
 
 if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 get_header();
 
+$shortcode_form = get_field('shortcode_form', 'options') ?? '';
 $job_description = get_field('job_description') ?? '';
 
 ?>
 
 <main id="single-jobs">
-    <div class="container">
-        <?php if (have_posts()) : ?>
-            <?php while (have_posts()) : the_post(); ?>
+	<div class="container">
+		<?php if (have_posts()) : ?>
+			<?php while (have_posts()) : the_post(); ?>
 
-                <h1 class="title-page text-center">
-                    <?= the_title(); ?>
-                </h1>
+				<h1 class="title-page text-center">
+					<?= the_title(); ?>
+				</h1>
 
-                <?php if (!empty($job_description)) : ?>
-                    <p class="page-description">
-                        <?= $job_description; ?>
-                    </p>
-                <?php endif; ?>
+				<?php if (!empty($job_description)) : ?>
+					<p class="page-description">
+						<?= $job_description; ?>
+					</p>
+				<?php endif; ?>
 
-                <?= do_shortcode('[contact-form-7 id="6" title="Formulario de solicitudes"]'); ?>
+				<?= do_shortcode($shortcode_form); ?>
 
-            <?php endwhile; ?>
-        <?php endif; ?>
-    </div>
+			<?php endwhile; ?>
+		<?php endif; ?>
+	</div>
 </main>
 <script>
-    $(document).ready(function() {
-        $('#single-jobs .container form .add-button .btn')
-            .click((ev) => {
-                let section_id = $(ev.target).parent().parent().attr('id'); // get section id
+	$(document).ready(function() {
+		$('#single-jobs .container form .add-button .btn')
+			.click((ev) => {
+				let section_id = $(ev.target).parent().parent().attr('id'); // get section id
 
-                let num = $(`#${section_id} .cloned-inputs`).length; // how many "duplicatable" input fields we currently have
-                let newNum = new Number(num + 1); // the numeric ID of the new input field being added
+				let num = $(`#${section_id} .cloned-inputs`).length; // how many "duplicatable" input fields we currently have
+				let newNum = new Number(num + 1); // the numeric ID of the new input field being added
 
-                // create the new element via clone(), and manipulate it's ID using newNum value
-                let newElem = $(`#${section_id} #inputs-group` + num)
-                    .clone(true)
-                    .attr('id', 'inputs-group' + newNum)
-                    .addClass('active-rm-btn');
+				// create the new element via clone(), and manipulate it's ID using newNum value
+				let newElem = $(`#${section_id} #inputs-group` + num)
+					.clone(true)
+					.attr('id', 'inputs-group' + newNum)
+					.addClass('active-rm-btn');
 
-                // manipulate the name/id values of the input inside the new element
-                let inputs = newElem.find('.row .col-6 input, .row .col-6 select, .row .col-12 textarea');
-                inputs.each((index, element) => {
-                    $(element)
-                        .attr('id', (i, origValue) => {
-                            return !isNaN(origValue.slice(-1)) ?
-                                origValue.replace(origValue.slice(-1), newNum) :
-                                origValue + newNum;
-                        })
-                        .attr('name', (i, origValue) => {
-                            return !isNaN(origValue.slice(-1)) ?
-                                origValue.replace(origValue.slice(-1), newNum) :
-                                origValue + newNum;
-                        })
-                        .val("");
-                });
+				// manipulate the name/id values of the input inside the new element
+				let inputs = newElem.find('.row .col-6 input, .row .col-6 select, .row .col-12 textarea');
+				inputs.each((index, element) => {
+					$(element)
+						.attr('id', (i, origValue) => {
+							return !isNaN(origValue.slice(-1)) ?
+								origValue.replace(origValue.slice(-1), newNum) :
+								origValue + newNum;
+						})
+						.attr('name', (i, origValue) => {
+							return !isNaN(origValue.slice(-1)) ?
+								origValue.replace(origValue.slice(-1), newNum) :
+								origValue + newNum;
+						})
+						.val("");
+				});
 
-                // manipulate the for value of the label inside the new element
-                let labels = newElem.find('.row .col-6 label, .row .col-12 label');
-                labels.each((index, element) => {
-                    $(element).attr('for', (i, origValue) => {
-                        return !isNaN(origValue.slice(-1)) ?
-                            origValue.replace(origValue.slice(-1), newNum) :
-                            origValue + newNum;
-                    });
-                });
+				// manipulate the for value of the label inside the new element
+				let labels = newElem.find('.row .col-6 label, .row .col-12 label');
+				labels.each((index, element) => {
+					$(element).attr('for', (i, origValue) => {
+						return !isNaN(origValue.slice(-1)) ?
+							origValue.replace(origValue.slice(-1), newNum) :
+							origValue + newNum;
+					});
+				});
 
-                // insert the new element after the last "duplicatable" input field
-                $(`#${section_id} #inputs-group` + num).after(newElem);
-            });
+				// insert the new element after the last "duplicatable" input field
+				$(`#${section_id} #inputs-group` + num).after(newElem);
+			});
 
-        $('#single-jobs .container form .cloned-inputs .remove-button #btn-remove')
-            .click((ev) => {
-                let currentParentElemID = $(ev.target).parent().parent().parent().attr('id');
-                $(`#${currentParentElemID}`).remove();
-            });
-    });
+		$('#single-jobs .container form .cloned-inputs .remove-button #btn-remove')
+			.click((ev) => {
+				let currentParentElemID = $(ev.target).parent().parent().parent().attr('id');
+				$(`#${currentParentElemID}`).remove();
+			});
+	});
 </script>
 
 <?php get_footer(); ?>
