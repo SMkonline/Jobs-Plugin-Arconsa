@@ -12,6 +12,37 @@ Version: 1.0.0
 // <-------------------- Custom functions -----------------------> 
 
 /**
+ * Add Bootstrap CSS
+ */
+function add_bootstrap()
+{
+    wp_enqueue_style('bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css');
+    wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js', array(), '', true);
+}
+add_action('wp_enqueue_scripts', 'add_bootstrap');
+
+
+/**
+ * Add ACF options page
+ */
+if (function_exists('acf_add_options_page')) {
+    acf_add_options_page(array(
+        'page_title'    => 'Theme Settings',
+        'menu_title'    => 'Theme Settings',
+        'menu_slug'     => 'theme-settings',
+        'capability'    => 'edit_posts',
+        'redirect'      =>  true
+    ));
+
+    acf_add_options_sub_page(array(
+        'page_title'     => 'Formulario de solicitudes',
+        'menu_title'     => 'Formulario',
+        'parent_slug'   => 'theme-settings',
+    ));
+}
+
+
+/**
  * Create customs fields
  */
 if (function_exists('acf_add_local_field_group')) :
@@ -78,6 +109,53 @@ if (function_exists('acf_add_local_field_group')) :
     ));
 
     acf_add_local_field_group(array(
+        'key' => 'group_623ba1f2920c1',
+        'title' => 'Formulario de solicitudes',
+        'fields' => array(
+            array(
+                'key' => 'field_623ba204905d7',
+                'label' => 'Shortcode',
+                'name' => 'shortcode_form',
+                'type' => 'text',
+                'instructions' => 'Aquí se deberá copiar el shortcode del formulario de solicitudes, que se visualizará al momento de que un usuario aplique a una vacante disponible.',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'options_page',
+                    'operator' => '==',
+                    'value' => 'acf-options-formulario',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => array(
+            0 => 'the_content',
+        ),
+        'active' => true,
+        'description' => '',
+        'show_in_rest' => 0,
+        'modified' => 1648133804,
+    ));
+
+    acf_add_local_field_group(array(
         'key' => 'group_61e2115ccd906',
         'title' => 'Página de Vacantes',
         'fields' => array(
@@ -141,7 +219,6 @@ if (function_exists('acf_add_local_field_group')) :
         'description' => '',
         'show_in_rest' => 0,
     ));
-
 endif;
 
 
@@ -325,7 +402,7 @@ function add_jobapplication_filter()
         $selected_job = isset($_GET['job_id']) ? sanitize_text_field($_GET['job_id']) : '';
 
         if (!empty($_jobs)) {
-        ?>
+?>
             <select name="job_id">
                 <option value="0"><?php _e('Todas las vacantes', 'custom-post-type-ui'); ?></option>
                 <?php
