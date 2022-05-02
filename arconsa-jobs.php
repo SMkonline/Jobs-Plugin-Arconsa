@@ -14,12 +14,12 @@ Version: 1.0.0
 /**
  * Add Bootstrap CSS
  */
-function add_bootstrap()
+function ajp_add_bootstrap()
 {
     wp_enqueue_style('bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css');
     wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js', array(), '', true);
 }
-add_action('wp_enqueue_scripts', 'add_bootstrap');
+add_action('wp_enqueue_scripts', 'ajp_add_bootstrap');
 
 
 /**
@@ -300,7 +300,7 @@ add_action('init', 'cptui_register_my_cpts_resumes');
 /**
  * Add "Solicitudes para la vacante" custom column Jobs Posts.
  */
-function view_application_column($columns)
+function ajp_view_application_column($columns)
 {
     $column = array_merge(
         $columns,
@@ -311,13 +311,13 @@ function view_application_column($columns)
 
     return $column;
 }
-add_filter('manage_jobs_posts_columns', 'view_application_column');
+add_filter('manage_jobs_posts_columns', 'ajp_view_application_column');
 
 
 /**
  * Add value to "Solicitudes para la vacante" Column
  */
-function view_application_column_value($column, $post_id)
+function ajp_view_application_column_value($column, $post_id)
 {
     // Add "Solicitudes para la vacante Link"
     if ('view_applicants' == $column) {
@@ -330,13 +330,13 @@ function view_application_column_value($column, $post_id)
         echo $resume = '<a href="' . esc_url($post_link) . '">' . sprintf(__("Ver solicitudes%s", 'custom-post-type-ui'), '(' . $job_count . ')') . '</a>';
     }
 }
-add_action('manage_jobs_posts_custom_column', 'view_application_column_value', 10, 2);
+add_action('manage_jobs_posts_custom_column', 'ajp_view_application_column_value', 10, 2);
 
 
 /**
  * Add "Nombre del solicitante" custom column Resumes Posts.
  */
-function view_applicants_name_column($columns)
+function ajp_view_applicants_name_column($columns)
 {
     $column = array_merge(
         $columns,
@@ -347,25 +347,25 @@ function view_applicants_name_column($columns)
 
     return $column;
 }
-add_filter('manage_resumes_posts_columns', 'view_applicants_name_column');
+add_filter('manage_resumes_posts_columns', 'ajp_view_applicants_name_column');
 
 
 /**
  * Add value to "Nombre del solicitante" Column
  */
-function view_applicants_name_column_value($column, $post_id)
+function ajp_view_applicants_name_column_value($column, $post_id)
 {
     if ('applicants_name' == $column) {
         echo '<strong>' . get_post_meta($post_id, 'fullname', true) . '</strong>';
     }
 }
-add_action('manage_resumes_posts_custom_column', 'view_applicants_name_column_value', 10, 2);
+add_action('manage_resumes_posts_custom_column', 'ajp_view_applicants_name_column_value', 10, 2);
 
 
 /**
  * Add application listing filter to admin 
  */
-function add_jobapplication_filter()
+function ajp_add_jobapplication_filter()
 {
     $type = 'post';
     if (isset($_GET['post_type'])) {
@@ -420,13 +420,13 @@ function add_jobapplication_filter()
         }
     }
 }
-add_action('restrict_manage_posts', 'add_jobapplication_filter', 10, 1);
+add_action('restrict_manage_posts', 'ajp_add_jobapplication_filter', 10, 1);
 
 
 /**
  * Add job experience filter to admin 
  */
-function add_jobexperience_filter()
+function ajp_add_jobexperience_filter()
 {
     $type = 'post';
     if (isset($_GET['post_type'])) {
@@ -457,13 +457,13 @@ function add_jobexperience_filter()
         }
     }
 }
-add_action('restrict_manage_posts', 'add_jobexperience_filter', 10, 1);
+add_action('restrict_manage_posts', 'ajp_add_jobexperience_filter', 10, 1);
 
 
 /**
  * Add job experience filter to admin 
  */
-function add_leveleducation_filter()
+function ajp_add_leveleducation_filter()
 {
     $type = 'post';
     if (isset($_GET['post_type'])) {
@@ -494,13 +494,13 @@ function add_leveleducation_filter()
         }
     }
 }
-add_action('restrict_manage_posts', 'add_leveleducation_filter', 10, 1);
+add_action('restrict_manage_posts', 'ajp_add_leveleducation_filter', 10, 1);
 
 
 /**
  * Update query for getting all aplications against a filter.
  */
-function get_applications_filter($query)
+function ajp_get_applications_filter($query)
 {
     if (is_admin() && (isset($query->query['post_type']) && 'resumes' == $query->query['post_type'])) {
 
@@ -552,13 +552,13 @@ function get_applications_filter($query)
         }
     }
 }
-add_filter('parse_query', 'get_applications_filter');
+add_filter('parse_query', 'ajp_get_applications_filter');
 
 
 /**
  * Create export button
  */
-function admin_post_list_top_export_button($which)
+function ajp_admin_post_list_top_export_button($which)
 {
     $type = 'post';
     if (isset($_GET['post_type'])) {
@@ -571,13 +571,13 @@ function admin_post_list_top_export_button($which)
     <?php
     }
 }
-add_action('manage_posts_extra_tablenav', 'admin_post_list_top_export_button', 20, 1);
+add_action('manage_posts_extra_tablenav', 'ajp_admin_post_list_top_export_button', 20, 1);
 
 
 /**
  * Funcion para limpiar datos en el excel
  */
-function cleanData(&$str)
+function ajp_cleanData(&$str)
 {
     $str = preg_replace("/\t/", "\\t", $str);
     $str = preg_replace("/\r?\n/", "\\n", $str);
@@ -596,7 +596,7 @@ function cleanData(&$str)
 /**
  * Export button action
  */
-function func_export_all_posts()
+function ajp_func_export_all_posts()
 {
     if (isset($_GET['export_data'])) {
         $arg = array(
@@ -670,7 +670,7 @@ function func_export_all_posts()
                     'Vacante aplicada' => get_the_title()
                 );
 
-                array_walk($values, __NAMESPACE__ . '\cleanData');
+                array_walk($values, __NAMESPACE__ . '\ajp_cleanData');
                 $excelData .= implode("\t", array_values($values)) . "\n";
             }
 
@@ -683,13 +683,13 @@ function func_export_all_posts()
         }
     }
 }
-add_action('init', 'func_export_all_posts');
+add_action('init', 'ajp_func_export_all_posts');
 
 
 /**
  * Save form data to 'Hojas de Vida'
  */
-function action_wpcf7_before_send_mail($contact_form, $abort, $submission)
+function ajp_action_wpcf7_before_send_mail($contact_form, $abort, $submission)
 {
     $form_title = $contact_form->title();
 
@@ -740,13 +740,13 @@ function action_wpcf7_before_send_mail($contact_form, $abort, $submission)
         }
     }
 };
-add_action('wpcf7_before_send_mail', 'action_wpcf7_before_send_mail', 10, 3);
+add_action('wpcf7_before_send_mail', 'ajp_action_wpcf7_before_send_mail', 10, 3);
 
 
 /**
  * Create Detail Page for show Applicants data
  */
-function jobpost_applicants_detail_page_content()
+function ajp_jobpost_applicants_detail_page_content()
 {
     global $post;
 
@@ -1180,4 +1180,4 @@ function jobpost_applicants_detail_page_content()
         </div>
 <?php endif;
 }
-add_action('edit_form_after_title', 'jobpost_applicants_detail_page_content');
+add_action('edit_form_after_title', 'ajp_jobpost_applicants_detail_page_content');
