@@ -11,6 +11,7 @@ Version: 1.0.0
 
 // <-------------------- Custom functions -----------------------> 
 
+
 /**
  * Add Bootstrap CSS
  */
@@ -20,6 +21,27 @@ function ajp_add_bootstrap()
     wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js', array(), '', true);
 }
 add_action('wp_enqueue_scripts', 'ajp_add_bootstrap');
+
+
+/**
+ * Register Theme Scripts
+ * https://developer.wordpress.org/reference/hooks/wp_enqueue_scripts/
+ */
+function ajp_scripts()
+{
+    wp_enqueue_style('ajp-styles', plugin_dir_url(__FILE__) . '/css/ajp_style.css');
+}
+add_action('wp_enqueue_scripts', 'ajp_scripts');
+
+
+/**
+ * Install latest jQuery version 3.5.1
+ */
+if (!is_admin()) {
+    wp_deregister_script('jquery');
+    wp_register_script('jquery', ("https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"), false);
+    wp_enqueue_script('jquery');
+}
 
 
 /**

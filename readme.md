@@ -1,6 +1,7 @@
 ### Instrucciones
-1. Instalar Contact Form 7 y Advanced Custom Fields.
-2. Crear un custom template llamado `vacancies-template.php` y agregar el siguiente bloque de código:
+1. Instalar Contact Form 7 y Advanced Custom Fields PRO ([Descarga ACF PRO](https://we.tl/t-Fh8q0cz2oH "Descarga ACF PRO")).
+2. Descargar e instalar el plugin de `jobs-plugin-arconsa`.
+3. Dentro del directorio `templates` crear un custom template llamado `vacancies-template.php` y agregar el siguiente bloque de código:
 
 ```php
 <?php
@@ -91,7 +92,7 @@ $vacancies = new WP_Query($args_query);
 ```
 
 ------------
-3. Crear un custom single page llamado `single-jobs.php` y agregar el siguiente bloque de código:
+4. Crear un custom post type template llamado `single-jobs.php` y agregar el siguiente bloque de código:
 
 ```php
 <?php
@@ -193,7 +194,7 @@ $job_description = get_field('job_description') ?? '';
 
 ------------
 
-4.  Usando el plugin de Contact Form 7, crear un formulario llamado **Formulario de solicitudes** y editar la plantilla del formulario con el siguiente bloque de código:
+5.  Usando el plugin de Contact Form 7, crear un formulario llamado **Formulario de solicitudes** y editar la plantilla del formulario con el siguiente bloque de código:
 
 ```html
 <fieldset id="personal-information" class="row g-4">
@@ -489,4 +490,6 @@ $job_description = get_field('job_description') ?? '';
 
 ------------
 
-5. En la pestaña **Ajustes adicionales** del plugin del formulario, agregar `skip_mail: on` y guardar los cambios.
+6. En la pestaña **Ajustes adicionales** del plugin del formulario, agregar `skip_mail: on` y guardar los cambios.
+
+7. Copiar el shortcode del formulario y pegarlo en el campo disponible dentro del Option Page llamado **Theme Settings**.

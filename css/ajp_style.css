@@ -1,0 +1,129 @@
+#vacancies-template-d96e02 .container .vacancies-listing {
+    position: relative;
+}
+
+#vacancies-template-d96e02 .container .vacancies-listing .item-card .card {
+    color: var(--bs-body-color);
+}
+
+#vacancies-template-d96e02 .container .vacancies-listing .item-card .card .card-body .btn-primary {
+    background-color: #FFBB33;
+    color: #00274D;
+    font-weight: 700;
+    border-radius: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: none;
+}
+
+#vacancies-template-d96e02 .container .vacancies-listing .item-card .card .card-body .btn-primary:hover {
+    background-color: #D5D3D1;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset legend {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset label {
+    font-size: 15px;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset input:not(input[type="checkbox"]),
+#single-jobs .container .wpcf7 .wpcf7-form fieldset select:not(input[type="checkbox"]),
+#single-jobs .container .wpcf7 .wpcf7-form fieldset textarea:not(input[type="checkbox"]) {
+    color: #666;
+    border-color: #cbcbcb;
+    border-radius: 3px;
+    font-size: 15px;
+    padding: 8px 16px;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset textarea {
+    min-height: 80px;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset .form-text {
+    font-size: 12px;
+    color: #787877;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset .form-description {
+    font-size: 1rem;
+    color: #787877;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset .cloned-inputs .add-button button.btn-secondary {
+    background-color: #787877;
+    color: #fff;
+    font-size: 15px;
+    border-radius: 8px;
+    padding: 7px 15px;
+    border: none;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset .cloned-inputs .add-button button.btn-secondary:hover {
+    background-color: #D5D3D1;
+    color: #00274d;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset .cloned-inputs .remove-button {
+    display: none;
+    align-self: flex-end;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset .cloned-inputs .remove-button button.btn-secondary {
+    background-color: #787877;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    padding: 6px 10px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    border: none;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset .cloned-inputs.active-rm-btn .remove-button {
+    display: block;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset#termsCoditions .termsCoditions .wpcf7-list-item {
+    margin-left: 0;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset#termsCoditions .termsCoditions .wpcf7-list-item label {
+    padding-bottom: 0;
+    font-size: 1rem;
+    color: #787877;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset#termsCoditions .termsCoditions .wpcf7-list-item label a {
+    color: #00274D;
+    text-decoration: underline;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form fieldset#termsCoditions p:empty {
+    display: none;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form input[type="submit"].btn-primary {
+    background-color: #FFBB33;
+    color: #00274D;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 13px 30px;
+    border: none;
+}
+
+#single-jobs .container .wpcf7 .wpcf7-form input[type="submit"].btn-primary:hover {
+    background-color: #D5D3D1;
+}
